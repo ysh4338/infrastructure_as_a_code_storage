@@ -1,12 +1,14 @@
 module "ec2_key_pair" {
   source = "terraform-aws-modules/key-pair/aws"
 
-  key_name           = var.key_name
-  create_private_key = var.create_private_key
+  for_each           = var.key_pair_config
+  key_name           = each.value.key_name
+  create_private_key = each.value.create_private_key
 }
 
 resource "local_file" "test_local" {
-  filename        = var.save_path_pem
-  file_permission = var.pem_key_permission
-  content         = module.ec2_key_pair.private_key_pem
+  for_each        = var.key_pair_config
+  filename        = each.value.save_path_pem
+  file_permission = each.value.pem_key_permission
+  content         = module.ec2_key_pair[each.key].private_key_pem
 }

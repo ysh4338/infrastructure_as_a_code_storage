@@ -24,6 +24,8 @@ resource "aws_vpc_peering_connection_options" "peering_options_ap" {
   requester {
     allow_remote_vpc_dns_resolution = true
   }
+
+  depends_on = [aws_vpc_peering_connection_accepter.peering_accepter_us]
 }
 resource "aws_vpc_peering_connection_options" "peering_options_us" {
   provider = aws.oregon
@@ -33,6 +35,8 @@ resource "aws_vpc_peering_connection_options" "peering_options_us" {
   accepter {
     allow_remote_vpc_dns_resolution = true
   }
+
+  depends_on = [aws_vpc_peering_connection.peering_ap_us]
 }
 
 
@@ -42,6 +46,8 @@ resource "aws_route" "ap_to_us" {
   route_table_id            = var.vpc_configs["ap-northeast-2"].route_table_ids[count.index]
   destination_cidr_block    = var.vpc_configs["ap-northeast-2"].peer_vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection.peering_ap_us.id
+
+  depends_on = [aws_vpc_peering_connection_options.peering_options_ap]
 }
 resource "aws_route" "us_to_ap" {
   provider = aws.oregon
@@ -50,4 +56,6 @@ resource "aws_route" "us_to_ap" {
   route_table_id            = var.vpc_configs["us-west-2"].route_table_ids[count.index]
   destination_cidr_block    = var.vpc_configs["us-west-2"].peer_vpc_cidr
   vpc_peering_connection_id = aws_vpc_peering_connection_accepter.peering_accepter_us.id
+
+  depends_on = [aws_vpc_peering_connection_options.peering_options_us]
 }
