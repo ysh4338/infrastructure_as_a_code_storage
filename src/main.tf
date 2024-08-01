@@ -149,14 +149,14 @@ module "key_pair_ap_northeast_2" {
 
   key_pair_config = local.key_pair_config.ap-northeast-2
 }
-module "key_pair_us_east_2" {
-  providers = {
-    aws = aws.us-west-2
-  }
-  source = "./modules/key_pair"
+# module "key_pair_us_east_2" {
+#   providers = {
+#     aws = aws.us-west-2
+#   }
+#   source = "./modules/key_pair"
 
-  key_pair_config = local.key_pair_config.us-east-2
-}
+#   key_pair_config = local.key_pair_config.us-east-2
+# }
 module "ec2_ap_northeast_2" {
   source = "./modules/ec2"
 

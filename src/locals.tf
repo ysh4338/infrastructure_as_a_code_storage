@@ -107,27 +107,11 @@ locals {
       }
     },
     us-east-2 = {
-      ec2 = {
-        key_name           = "${local.convention}-pem-ec2-us"
-        create_private_key = "true"
-        save_path_pem      = "${local.convention}-pem-ec2-us.pem"
-        pem_key_permission = "0600"
-      }
     }
   }
 
   ec2_instace_config = {
     ap-northeast-2 = {
-      eks-bastion = {
-        ami                    = data.aws_ami.amazon_linux_2023.id
-        key_name               = local.key_pair_config.ap-northeast-2.ec2.key_name
-        instance_type          = "t3.micro"
-        subnet_id              = module.vpc_ap_northeast_2.public_subnets[0]
-        vpc_security_group_ids = [module.security_groups.ap_northeast_2_ec2_eks_bastion_security_group_id]
-        iam_instance_profile   = module.iam_role.iam_instance_profile_name_ec2
-
-        tag_name = "${local.convention}-ec2-eks-bastion"
-      },
       ec2-app-server = {
         ami                    = data.aws_ami.amazon_linux_2023.id
         key_name               = local.key_pair_config.ap-northeast-2.ec2.key_name

@@ -1,16 +1,61 @@
 # Terraform Environment Setting
+
+### Terraform install
+
 - Amazon Linux environment setting
+
 ```bash
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 sudo yum -y install terraform
 ```
-- terraform 실행 Command
+
+### Terraform remote backend setting
+
+- Windows 환경 → CMD 파일 실행
+
+```CMD
+cd env_setting
+create_remote_backend.cmd sample-env
+```
+
+- Linux 환경 → Shell Script 파일 실행
+
+```bash
+cd env_setting
+./create_remote_backend.sh sample-env
+```
+ 
+- backend.tf 파일 수정: {ENV_NAME} → sample-env 변경
+
+```bash
+terraform {
+  backend "s3" {
+    bucket         = "{ENV_NAME}-tf-backend"
+    key            = "terraform-sample/{ENV_NAME}-bucket-tf-backend"
+    region         = "ap-northeast-2"
+    encrypt        = true
+    dynamodb_table = "{ENV_NAME}-dynamodb-tf-state-table"
+  }
+}
+```
+
+### Terraform 실행
+
+- Terraform 초기화
+
 ```bash
 terraform init
+```
+
+- Infrastructure 배포
+
+```bash
 terraform apply
 ```
+
 - 생성 후 PEM 키 확인하는 방법 (해당 폴더 내 pem키 저장됨)
+
 ```bash
 terraform state pull | jq -r '.resources[] | select(.type == "tls_private_key") | .instances[0].attributes.private_key_pem'
 ```
@@ -92,3 +137,9 @@ terraform console
 
 ***EKS 생성 시 권한 비활성화***
 - https://malwareanalysis.tistory.com/728
+
+
+
+
+- backend.tf 파일의 bucket, key, dynamodb 이름 변경
+- locals.tf 파일의 convention 변경
