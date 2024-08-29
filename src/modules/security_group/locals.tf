@@ -56,8 +56,8 @@ locals {
         ]
       }
     }
-    
-    
+
+
     ec2-instance = {
       eks_bastion = {
         name = "${var.convention}-sg-eks-bastion"
@@ -74,30 +74,30 @@ locals {
         name = "${var.convention}-sg-app-server"
         ingress_rule = [
           {
-            from_port   = "80"
-            to_port     = "80"
+            from_port   = "3000"
+            to_port     = "3000"
             protocol    = "tcp"
             cidr_blocks = "10.0.0.0/16"
           }
         ]
       }
     }
-    
+
     elb = {
       application = {
         name = "${var.convention}-sg-alb"
         ingress_rule = [
           {
-            from_port   = 0
-            to_port     = 0
+            from_port   = 80
+            to_port     = 80
             protocol    = -1
-            cidr_blocks = local.vpc_cidr_ap
+            cidr_blocks = "0.0.0.0/0"
           }
         ]
       }
     }
-    
-    
+
+
     rds = {
       aurora_postgresql = {
         name = "${var.convention}-sg-rds-aurora-postgresql"

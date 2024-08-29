@@ -115,12 +115,65 @@ locals {
       ec2-app-server = {
         ami                    = data.aws_ami.amazon_linux_2023.id
         key_name               = local.key_pair_config.ap-northeast-2.ec2.key_name
-        instance_type          = "m7i.xlarge"
+        instance_type          = "c7i.2xlarge"
         subnet_id              = module.vpc_ap_northeast_2.private_subnets[1]
         vpc_security_group_ids = [module.security_groups.ap_northeast_2_ec2_app_server_security_group_id]
-        iam_instance_profile   = module.iam_role.iam_instance_profile_name_ec2
 
-        tag_name = "${local.convention}-ec2-llm-app"
+        volume_size = 100
+        tag_name    = "${local.convention}-ec2-llm-app"
+
+        user_data = <<-EOF
+            #!/bin/bash
+            # Python 3.11 설치 스크립트
+            echo "#####################"
+            echo "Python 3.11 설치 시작"
+            echo "npde.js 10.5 설치 시작"
+            echo "nginx 설치 시작"
+            echo "#####################"
+            sudo dnf install python3.11 -y
+            sudo dnf install npm -y
+            sudo dnf install nginx -y
+
+            echo "##############################"
+            echo "Python Default Version Setting"
+            echo "update-alternatives 명령 실행."
+            echo "##############################"
+            sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+            sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2
+            echo 2 | sudo update-alternatives --config python3
+            
+            echo "################################"
+            echo "Python 3.11 PIP Module 설치 시작"
+            echo "################################"
+            python3 -m ensurepip --default-pip
+
+            echo "##############################"
+            echo "Python3 → Python Symbolic link"
+            echo "##############################"
+            echo "sudo ln -fs /usr/bin/python3.11 /usr/bin/python"
+            sudo ln -fs /usr/bin/python3.11 /usr/bin/python
+
+            echo "#####################################"
+            echo "dnf/yum에서 사용하는 Python 버전 지정"
+            echo "#####################################"
+            head -1 /usr/bin/dnf
+            sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/dnf
+            sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/yum
+            head -1 /usr/bin/dnf
+            sudo dnf --version
+
+            echo "################"
+            echo "PIP Upgrade 설치"
+            echo "################"
+            python3 -m pip install --upgrade pip
+
+            echo "##################"
+            echo "Git & Code Install"
+            echo "##################"
+            yum install git -y
+          EOF
+
+        iam_instance_profile = module.iam_role.iam_instance_profile_name_ec2
       }
     }
     us-west-2 = {
@@ -194,18 +247,19 @@ locals {
       target_groups = {
         "${local.convention}-tg-llm-app" = {
           protocol    = "HTTP"
-          port        = 80
+          port        = 3000
           target_type = "instance"
           target_id   = module.ec2_ap_northeast_2.ec2_instance_id["ec2-app-server"].instance_id
         }
       }
 
       health_check = {
-        target              = "HTTP:80/"
+        target              = "HTTP:3000/"
         interval            = 30
         healthy_threshold   = 2
         unhealthy_threshold = 2
         timeout             = 5
+        matcher             = "302"
       }
     }
   }

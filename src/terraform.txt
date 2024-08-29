@@ -1,0 +1,2941 @@
+# data.aws_ami.amazon_linux_2023:
+data "aws_ami" "amazon_linux_2023" {
+    architecture          = "x86_64"
+    arn                   = "arn:aws:ec2:ap-northeast-2::image/ami-008d41dbe16db6778"
+    block_device_mappings = [
+        {
+            device_name  = "/dev/xvda"
+            ebs          = {
+                "delete_on_termination" = "true"
+                "encrypted"             = "false"
+                "iops"                  = "3000"
+                "snapshot_id"           = "snap-043938a98f5c04e4e"
+                "throughput"            = "125"
+                "volume_size"           = "8"
+                "volume_type"           = "gp3"
+            }
+            no_device    = ""
+            virtual_name = ""
+        },
+    ]
+    boot_mode             = "uefi-preferred"
+    creation_date         = "2024-08-15T17:38:17.000Z"
+    deprecation_time      = "2024-11-13T17:38:00.000Z"
+    description           = "Amazon Linux 2023 AMI 2023.5.20240819.0 x86_64 HVM kernel-6.1"
+    ena_support           = true
+    hypervisor            = "xen"
+    id                    = "ami-008d41dbe16db6778"
+    image_id              = "ami-008d41dbe16db6778"
+    image_location        = "amazon/al2023-ami-2023.5.20240819.0-kernel-6.1-x86_64"
+    image_owner_alias     = "amazon"
+    image_type            = "machine"
+    imds_support          = "v2.0"
+    include_deprecated    = false
+    most_recent           = true
+    name                  = "al2023-ami-2023.5.20240819.0-kernel-6.1-x86_64"
+    owner_id              = "137112412989"
+    owners                = [
+        "amazon",
+    ]
+    platform_details      = "Linux/UNIX"
+    product_codes         = []
+    public                = true
+    root_device_name      = "/dev/xvda"
+    root_device_type      = "ebs"
+    root_snapshot_id      = "snap-043938a98f5c04e4e"
+    sriov_net_support     = "simple"
+    state                 = "available"
+    state_reason          = {
+        "code"    = "UNSET"
+        "message" = "UNSET"
+    }
+    tags                  = {}
+    usage_operation       = "RunInstances"
+    virtualization_type   = "hvm"
+
+    filter {
+        name   = "architecture"
+        values = [
+            "x86_64",
+        ]
+    }
+    filter {
+        name   = "name"
+        values = [
+            "al2023-ami-2023*",
+        ]
+    }
+    filter {
+        name   = "virtualization-type"
+        values = [
+            "hvm",
+        ]
+    }
+}
+
+# data.aws_caller_identity.aws_account_info:
+data "aws_caller_identity" "aws_account_info" {
+    account_id = "526404279608"
+    arn        = "arn:aws:iam::526404279608:user/GenAI-PoC-01"
+    id         = "526404279608"
+    user_id    = "AIDAXVEBD3U4PHQTLII65"
+}
+
+
+# module.alb_ap_northeast_2.data.aws_partition.current:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+# module.alb_ap_northeast_2.aws_lb.this[0]:
+resource "aws_lb" "this" {
+    arn                                         = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:loadbalancer/app/aj-genai-alb-llm-app/7a9033ade19ae742"
+    arn_suffix                                  = "app/aj-genai-alb-llm-app/7a9033ade19ae742"
+    client_keep_alive                           = 3600
+    desync_mitigation_mode                      = "defensive"
+    dns_name                                    = "aj-genai-alb-llm-app-193443818.ap-northeast-2.elb.amazonaws.com"
+    drop_invalid_header_fields                  = true
+    enable_cross_zone_load_balancing            = true
+    enable_deletion_protection                  = false
+    enable_http2                                = true
+    enable_tls_version_and_cipher_suite_headers = false
+    enable_waf_fail_open                        = false
+    enable_xff_client_port                      = false
+    id                                          = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:loadbalancer/app/aj-genai-alb-llm-app/7a9033ade19ae742"
+    idle_timeout                                = 60
+    internal                                    = false
+    ip_address_type                             = "ipv4"
+    load_balancer_type                          = "application"
+    name                                        = "aj-genai-alb-llm-app"
+    preserve_host_header                        = false
+    security_groups                             = [
+        "sg-01fcdd83825147064",
+    ]
+    subnets                                     = [
+        "subnet-05a3d42674948aed8",
+        "subnet-069a8e452244e57ca",
+    ]
+    tags                                        = {
+        "terraform-aws-modules" = "alb"
+    }
+    tags_all                                    = {
+        "terraform-aws-modules" = "alb"
+    }
+    vpc_id                                      = "vpc-0a87de52b81f87ec8"
+    xff_header_processing_mode                  = "append"
+    zone_id                                     = "ZWKZPGTI48KDX"
+
+    access_logs {
+        enabled = false
+    }
+
+    connection_logs {
+        enabled = false
+    }
+
+    subnet_mapping {
+        subnet_id = "subnet-05a3d42674948aed8"
+    }
+    subnet_mapping {
+        subnet_id = "subnet-069a8e452244e57ca"
+    }
+
+    timeouts {}
+}
+
+# module.alb_ap_northeast_2.aws_lb_listener.this["ex-http"]:
+resource "aws_lb_listener" "this" {
+    arn               = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:listener/app/aj-genai-alb-llm-app/7a9033ade19ae742/dd6f7ca10b102723"
+    id                = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:listener/app/aj-genai-alb-llm-app/7a9033ade19ae742/dd6f7ca10b102723"
+    load_balancer_arn = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:loadbalancer/app/aj-genai-alb-llm-app/7a9033ade19ae742"
+    port              = 80
+    protocol          = "HTTP"
+    tags              = {
+        "terraform-aws-modules" = "alb"
+    }
+    tags_all          = {
+        "terraform-aws-modules" = "alb"
+    }
+
+    default_action {
+        order            = 1
+        target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1"
+        type             = "forward"
+    }
+}
+
+# module.alb_ap_northeast_2.aws_lb_target_group.this["aj-genai-tg-llm-app"]:
+resource "aws_lb_target_group" "this" {
+    arn                                = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1"
+    arn_suffix                         = "targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1"
+    deregistration_delay               = "300"
+    id                                 = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1"
+    ip_address_type                    = "ipv4"
+    lambda_multi_value_headers_enabled = false
+    load_balancer_arns                 = [
+        "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:loadbalancer/app/aj-genai-alb-llm-app/7a9033ade19ae742",
+    ]
+    load_balancing_algorithm_type      = "round_robin"
+    load_balancing_anomaly_mitigation  = "off"
+    load_balancing_cross_zone_enabled  = "use_load_balancer_configuration"
+    name                               = "tf-20240829061000671100000001"
+    name_prefix                        = "tf-"
+    port                               = 3000
+    protocol                           = "HTTP"
+    protocol_version                   = "HTTP1"
+    proxy_protocol_v2                  = false
+    slow_start                         = 0
+    tags                               = {
+        "terraform-aws-modules" = "alb"
+    }
+    tags_all                           = {
+        "terraform-aws-modules" = "alb"
+    }
+    target_type                        = "instance"
+    vpc_id                             = "vpc-0a87de52b81f87ec8"
+
+    health_check {
+        enabled             = true
+        healthy_threshold   = 5
+        interval            = 30
+        matcher             = "302"
+        path                = "/health"
+        port                = "3000"
+        protocol            = "HTTP"
+        timeout             = 5
+        unhealthy_threshold = 2
+    }
+
+    stickiness {
+        cookie_duration = 86400
+        enabled         = false
+        type            = "lb_cookie"
+    }
+
+    target_failover {}
+
+    target_group_health {
+        dns_failover {
+            minimum_healthy_targets_count      = "1"
+            minimum_healthy_targets_percentage = "off"
+        }
+        unhealthy_state_routing {
+            minimum_healthy_targets_count      = 1
+            minimum_healthy_targets_percentage = "off"
+        }
+    }
+
+    target_health_state {}
+}
+
+# module.alb_ap_northeast_2.aws_lb_target_group_attachment.this["aj-genai-tg-llm-app"]:
+resource "aws_lb_target_group_attachment" "this" {
+    id               = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1-20240829061001592300000002"
+    port             = 3000
+    target_group_arn = "arn:aws:elasticloadbalancing:ap-northeast-2:526404279608:targetgroup/tf-20240829061000671100000001/12ff15e4f621f0a1"
+    target_id        = "i-025b94aa0a78e661a"
+}
+
+
+# module.ec2_ap_northeast_2.module.ec2_instance["ec2-app-server"].data.aws_partition.current:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+# module.ec2_ap_northeast_2.module.ec2_instance["ec2-app-server"].data.aws_ssm_parameter.this[0]:
+data "aws_ssm_parameter" "this" {
+    arn             = "arn:aws:ssm:ap-northeast-2::parameter/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    id              = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    insecure_value  = "ami-0dba641460bd4aa31"
+    name            = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    type            = "String"
+    value           = (sensitive value)
+    version         = 123
+    with_decryption = true
+}
+
+# module.ec2_ap_northeast_2.module.ec2_instance["ec2-app-server"].aws_instance.this[0]:
+resource "aws_instance" "this" {
+    ami                                  = "ami-008d41dbe16db6778"
+    arn                                  = "arn:aws:ec2:ap-northeast-2:526404279608:instance/i-025b94aa0a78e661a"
+    associate_public_ip_address          = false
+    availability_zone                    = "ap-northeast-2c"
+    cpu_core_count                       = 4
+    cpu_threads_per_core                 = 2
+    disable_api_stop                     = false
+    disable_api_termination              = false
+    ebs_optimized                        = false
+    get_password_data                    = false
+    hibernation                          = false
+    iam_instance_profile                 = "aj-genai-role-ec2-core"
+    id                                   = "i-025b94aa0a78e661a"
+    instance_initiated_shutdown_behavior = "stop"
+    instance_state                       = "running"
+    instance_type                        = "c7i.2xlarge"
+    ipv6_address_count                   = 0
+    ipv6_addresses                       = []
+    key_name                             = "aj-genai-pem-ec2-ap"
+    monitoring                           = false
+    placement_partition_number           = 0
+    primary_network_interface_id         = "eni-051957acfa5dff061"
+    private_dns                          = "ip-10-0-42-163.ap-northeast-2.compute.internal"
+    private_ip                           = "10.0.42.163"
+    secondary_private_ips                = []
+    security_groups                      = []
+    source_dest_check                    = true
+    subnet_id                            = "subnet-029befe183a1f0440"
+    tags                                 = {
+        "Name" = "aj-genai-ec2-llm-app"
+    }
+    tags_all                             = {
+        "Name" = "aj-genai-ec2-llm-app"
+    }
+    tenancy                              = "default"
+    user_data                            = "3e460c139047634b9bd973b8beb478d988cf1d6b"
+    user_data_replace_on_change          = false
+    volume_tags                          = {
+        "Name" = ""
+    }
+    vpc_security_group_ids               = [
+        "sg-0b9e901dbd1b2f069",
+    ]
+
+    capacity_reservation_specification {
+        capacity_reservation_preference = "open"
+    }
+
+    cpu_options {
+        core_count       = 4
+        threads_per_core = 2
+    }
+
+    credit_specification {}
+
+    enclave_options {
+        enabled = false
+    }
+
+    maintenance_options {
+        auto_recovery = "default"
+    }
+
+    metadata_options {
+        http_endpoint               = "enabled"
+        http_protocol_ipv6          = "disabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+        instance_metadata_tags      = "disabled"
+    }
+
+    private_dns_name_options {
+        enable_resource_name_dns_a_record    = false
+        enable_resource_name_dns_aaaa_record = false
+        hostname_type                        = "ip-name"
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/xvda"
+        encrypted             = false
+        iops                  = 3000
+        tags                  = {}
+        tags_all              = {}
+        throughput            = 125
+        volume_id             = "vol-0eecfedac3815354e"
+        volume_size           = 100
+        volume_type           = "gp3"
+    }
+
+    timeouts {}
+}
+
+
+# module.iam_role.module.iam_role_ec2.data.aws_caller_identity.current:
+data "aws_caller_identity" "current" {
+    account_id = "526404279608"
+    arn        = "arn:aws:iam::526404279608:user/GenAI-PoC-01"
+    id         = "526404279608"
+    user_id    = "AIDAXVEBD3U4PHQTLII65"
+}
+
+# module.iam_role.module.iam_role_ec2.data.aws_iam_policy_document.assume_role[0]:
+data "aws_iam_policy_document" "assume_role" {
+    id            = "1199575246"
+    json          = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = [
+                        "sts:TagSession",
+                        "sts:AssumeRole",
+                    ]
+                    Effect    = "Allow"
+                    Principal = {
+                        AWS     = []
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    minified_json = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = [
+                        "sts:TagSession",
+                        "sts:AssumeRole",
+                    ]
+                    Effect    = "Allow"
+                    Principal = {
+                        AWS     = []
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    version       = "2012-10-17"
+
+    statement {
+        actions       = [
+            "sts:AssumeRole",
+            "sts:TagSession",
+        ]
+        effect        = "Allow"
+        not_actions   = []
+        not_resources = []
+        resources     = []
+
+        principals {
+            identifiers = [
+                "ec2.amazonaws.com",
+            ]
+            type        = "Service"
+        }
+        principals {
+            identifiers = []
+            type        = "AWS"
+        }
+    }
+}
+
+# module.iam_role.module.iam_role_ec2.data.aws_partition.current:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+# module.iam_role.module.iam_role_ec2.aws_iam_instance_profile.this[0]:
+resource "aws_iam_instance_profile" "this" {
+    arn         = "arn:aws:iam::526404279608:instance-profile/aj-genai-role-ec2-core"
+    create_date = "2024-08-01T08:19:47Z"
+    id          = "aj-genai-role-ec2-core"
+    name        = "aj-genai-role-ec2-core"
+    path        = "/"
+    role        = "aj-genai-role-ec2-core"
+    tags        = {}
+    tags_all    = {}
+    unique_id   = "AIPAXVEBD3U4JB4NQKGGX"
+}
+
+# module.iam_role.module.iam_role_ec2.aws_iam_role.this[0]:
+resource "aws_iam_role" "this" {
+    arn                   = "arn:aws:iam::526404279608:role/aj-genai-role-ec2-core"
+    assume_role_policy    = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = [
+                        "sts:TagSession",
+                        "sts:AssumeRole",
+                    ]
+                    Effect    = "Allow"
+                    Principal = {
+                        AWS     = []
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    create_date           = "2024-08-01T08:19:46Z"
+    force_detach_policies = false
+    id                    = "aj-genai-role-ec2-core"
+    managed_policy_arns   = [
+        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    ]
+    max_session_duration  = 3600
+    name                  = "aj-genai-role-ec2-core"
+    path                  = "/"
+    tags                  = {}
+    tags_all              = {}
+    unique_id             = "AROAXVEBD3U4BFHRWNIYA"
+}
+
+# module.iam_role.module.iam_role_ec2.aws_iam_role_policy_attachment.custom[0]:
+resource "aws_iam_role_policy_attachment" "custom" {
+    id         = "aj-genai-role-ec2-core-20240801081947812600000001"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    role       = "aj-genai-role-ec2-core"
+}
+
+
+# module.key_pair_ap_northeast_2.local_file.test_local["ec2"]:
+resource "local_file" "test_local" {
+    content              = (sensitive value)
+    content_base64sha256 = "LvGP+50vLmCv6xlqGoIf+HmiOg6QseYl1edMDiQFm84="
+    content_base64sha512 = "FRS5lLtFWT7lvOnZjfoYJKINhb7yVfYh4AoH6HTvdjRpFNhxn0Ut27YnmlVysr+TkPvxG7W2qx3flcMCO9VrbQ=="
+    content_md5          = "ffa27f80cf4ef4694aaa19c02dc8e871"
+    content_sha1         = "48c8d5eb7d31bc5dd6047cc2df4da76048abe446"
+    content_sha256       = "2ef18ffb9d2f2e60afeb196a1a821ff879a23a0e90b1e625d5e74c0e24059bce"
+    content_sha512       = "1514b994bb45593ee5bce9d98dfa1824a20d85bef255f621e00a07e874ef76346914d8719f452ddbb6279a5572b2bf9390fbf11bb5b6ab1ddf95c3023bd56b6d"
+    directory_permission = "0777"
+    file_permission      = "0600"
+    filename             = "aj-genai-pem-ec2-ap.pem"
+    id                   = "48c8d5eb7d31bc5dd6047cc2df4da76048abe446"
+}
+
+
+# module.key_pair_ap_northeast_2.module.ec2_key_pair["ec2"].aws_key_pair.this[0]:
+resource "aws_key_pair" "this" {
+    arn         = "arn:aws:ec2:ap-northeast-2:526404279608:key-pair/aj-genai-pem-ec2-ap"
+    fingerprint = "3c:5b:55:b8:63:62:da:b6:b8:55:7e:37:61:8e:21:a9"
+    id          = "aj-genai-pem-ec2-ap"
+    key_name    = "aj-genai-pem-ec2-ap"
+    key_pair_id = "key-03e65608c60434a61"
+    key_type    = "rsa"
+    public_key  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCplCFacF9Zg9/dXUWWVKIEfxJuqlv7/U+GpHgDcfQnam8BNTVVP7JPbWDvpaDhHXQcO+DhHGMgfRgwgOBck8wSUIzQEU+8pWLv54r0bwtqmMDKi3gErK3NRxiFvyAhr4VcLbkVHqFQI11xsGWVmU9iTg8QMXEXP+SXdDiR/WbKkxhyh9SIdYY7ymZpq+wdrYgjTVb7d1mlojztYueNXM3WV+/AwtkULcO+yAiQ743RXmiPPuSjYb8kBe8mSTZ21Yh6GDYNsFlB0mzeoFXxqHsCMymQ0LWEyTiSvzuwG4/mhRvJeqrYlUNpK9P993X7A67F0viLYd8RxidYl1ELoJqFr2h3DWkWfTETYFGg+gwYkmMFvUJvxztU1eyg9kR/odKcXDrjzV2Un2IVsk9yTgVObhHXAYXAiQXhYGbT1WqB/SYJLJc/ROH8TJYWnMXPa6eqkTKbB6mN5L/Hp/4qj1yO9+ZipiXXrllqqWDtVMWqvMCskWrihwvzYhr89yHaEF9uilgp+jhhOX4L7agzS0Sd5gLZ7Iglfk7zybK20BuazHBXa6oLMx1vS5KtLjA0ROJ6DOIzsHae5PAhH7st0mRNnXjbHFy+tr/KxuGjhrGhpWXOXTDPymI7TbMzXViIKvjlvXPeOTYIVyo+I4KmzXZUNyZYaYeZ3qjxET5rvnl0lQ=="
+    tags        = {}
+    tags_all    = {}
+}
+
+# module.key_pair_ap_northeast_2.module.ec2_key_pair["ec2"].tls_private_key.this[0]:
+resource "tls_private_key" "this" {
+    algorithm                     = "RSA"
+    ecdsa_curve                   = "P224"
+    id                            = "6d458deb484a5f1506726bc28a83dccb72f2b87c"
+    private_key_openssh           = (sensitive value)
+    private_key_pem               = (sensitive value)
+    private_key_pem_pkcs8         = (sensitive value)
+    public_key_fingerprint_md5    = "cd:84:17:1d:53:c4:a1:a8:f8:aa:64:62:e3:df:82:36"
+    public_key_fingerprint_sha256 = "SHA256:eSAD0PkwHDoT0qASBs+8zQdpAgMgDSW1DC32Uw3X2e0"
+    public_key_openssh            = <<-EOT
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCplCFacF9Zg9/dXUWWVKIEfxJuqlv7/U+GpHgDcfQnam8BNTVVP7JPbWDvpaDhHXQcO+DhHGMgfRgwgOBck8wSUIzQEU+8pWLv54r0bwtqmMDKi3gErK3NRxiFvyAhr4VcLbkVHqFQI11xsGWVmU9iTg8QMXEXP+SXdDiR/WbKkxhyh9SIdYY7ymZpq+wdrYgjTVb7d1mlojztYueNXM3WV+/AwtkULcO+yAiQ743RXmiPPuSjYb8kBe8mSTZ21Yh6GDYNsFlB0mzeoFXxqHsCMymQ0LWEyTiSvzuwG4/mhRvJeqrYlUNpK9P993X7A67F0viLYd8RxidYl1ELoJqFr2h3DWkWfTETYFGg+gwYkmMFvUJvxztU1eyg9kR/odKcXDrjzV2Un2IVsk9yTgVObhHXAYXAiQXhYGbT1WqB/SYJLJc/ROH8TJYWnMXPa6eqkTKbB6mN5L/Hp/4qj1yO9+ZipiXXrllqqWDtVMWqvMCskWrihwvzYhr89yHaEF9uilgp+jhhOX4L7agzS0Sd5gLZ7Iglfk7zybK20BuazHBXa6oLMx1vS5KtLjA0ROJ6DOIzsHae5PAhH7st0mRNnXjbHFy+tr/KxuGjhrGhpWXOXTDPymI7TbMzXViIKvjlvXPeOTYIVyo+I4KmzXZUNyZYaYeZ3qjxET5rvnl0lQ==
+    EOT
+    public_key_pem                = <<-EOT
+        -----BEGIN PUBLIC KEY-----
+        MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqZQhWnBfWYPf3V1FllSi
+        BH8Sbqpb+/1PhqR4A3H0J2pvATU1VT+yT21g76Wg4R10HDvg4RxjIH0YMIDgXJPM
+        ElCM0BFPvKVi7+eK9G8LapjAyot4BKytzUcYhb8gIa+FXC25FR6hUCNdcbBllZlP
+        Yk4PEDFxFz/kl3Q4kf1mypMYcofUiHWGO8pmaavsHa2II01W+3dZpaI87WLnjVzN
+        1lfvwMLZFC3DvsgIkO+N0V5ojz7ko2G/JAXvJkk2dtWIehg2DbBZQdJs3qBV8ah7
+        AjMpkNC1hMk4kr87sBuP5oUbyXqq2JVDaSvT/fd1+wOuxdL4i2HfEcYnWJdRC6Ca
+        ha9odw1pFn0xE2BRoPoMGJJjBb1Cb8c7VNXsoPZEf6HSnFw6481dlJ9iFbJPck4F
+        Tm4R1wGFwIkF4WBm09Vqgf0mCSyXP0Th/EyWFpzFz2unqpEymwepjeS/x6f+Ko9c
+        jvfmYqYl165Zaqlg7VTFqrzArJFq4ocL82Ia/Pch2hBfbopYKfo4YTl+C+2oM0tE
+        neYC2eyIJX5O88myttAbmsxwV2uqCzMdb0uSrS4wNETiegziM7B2nuTwIR+7LdJk
+        TZ142xxcvra/ysbho4axoaVlzl0wz8piO02zM11YiCr45b1z3jk2CFcqPiOCps12
+        VDcmWGmHmd6o8RE+a755dJUCAwEAAQ==
+        -----END PUBLIC KEY-----
+    EOT
+    rsa_bits                      = 4096
+}
+
+
+# module.route_53.aws_route53_record.this["bedrock"]:
+resource "aws_route53_record" "this" {
+    fqdn                             = "bedrock.us-west-2.amazonaws.com"
+    id                               = "Z01502983VLKLQSBVI1ML__A"
+    multivalue_answer_routing_policy = false
+    records                          = []
+    ttl                              = 0
+    type                             = "A"
+    zone_id                          = "Z01502983VLKLQSBVI1ML"
+
+    alias {
+        evaluate_target_health = true
+        name                   = "vpce-04cbdef730036d6e8-mc62nzgy.bedrock.us-west-2.vpce.amazonaws.com"
+        zone_id                = "Z1YSA3EXCYUU9Z"
+    }
+}
+
+# module.route_53.aws_route53_record.this["bedrock-runtime"]:
+resource "aws_route53_record" "this" {
+    fqdn                             = "bedrock-runtime.us-west-2.amazonaws.com"
+    id                               = "Z03407337AZHBLBSZP7V__A"
+    multivalue_answer_routing_policy = false
+    records                          = []
+    ttl                              = 0
+    type                             = "A"
+    zone_id                          = "Z03407337AZHBLBSZP7V"
+
+    alias {
+        evaluate_target_health = true
+        name                   = "vpce-0063d744aa082a302-v503hry9.bedrock-runtime.us-west-2.vpce.amazonaws.com"
+        zone_id                = "Z1YSA3EXCYUU9Z"
+    }
+}
+
+# module.route_53.aws_route53_zone.this["bedrock"]:
+resource "aws_route53_zone" "this" {
+    arn                 = "arn:aws:route53:::hostedzone/Z01502983VLKLQSBVI1ML"
+    comment             = "Managed by Terraform"
+    force_destroy       = false
+    id                  = "Z01502983VLKLQSBVI1ML"
+    name                = "bedrock.us-west-2.amazonaws.com"
+    name_servers        = [
+        "ns-0.awsdns-00.com.",
+        "ns-1024.awsdns-00.org.",
+        "ns-1536.awsdns-00.co.uk.",
+        "ns-512.awsdns-00.net.",
+    ]
+    primary_name_server = "ns-0.awsdns-00.com."
+    tags                = {}
+    tags_all            = {}
+    zone_id             = "Z01502983VLKLQSBVI1ML"
+
+    vpc {
+        vpc_id     = "vpc-0a87de52b81f87ec8"
+        vpc_region = "ap-northeast-2"
+    }
+}
+
+# module.route_53.aws_route53_zone.this["bedrock-runtime"]:
+resource "aws_route53_zone" "this" {
+    arn                 = "arn:aws:route53:::hostedzone/Z03407337AZHBLBSZP7V"
+    comment             = "Managed by Terraform"
+    force_destroy       = false
+    id                  = "Z03407337AZHBLBSZP7V"
+    name                = "bedrock-runtime.us-west-2.amazonaws.com"
+    name_servers        = [
+        "ns-0.awsdns-00.com.",
+        "ns-1024.awsdns-00.org.",
+        "ns-1536.awsdns-00.co.uk.",
+        "ns-512.awsdns-00.net.",
+    ]
+    primary_name_server = "ns-0.awsdns-00.com."
+    tags                = {}
+    tags_all            = {}
+    zone_id             = "Z03407337AZHBLBSZP7V"
+
+    vpc {
+        vpc_id     = "vpc-0a87de52b81f87ec8"
+        vpc_region = "ap-northeast-2"
+    }
+}
+
+
+# module.s3_bucket.data.aws_caller_identity.current:
+data "aws_caller_identity" "current" {
+    account_id = "526404279608"
+    arn        = "arn:aws:iam::526404279608:user/GenAI-PoC-01"
+    id         = "526404279608"
+    user_id    = "AIDAXVEBD3U4PHQTLII65"
+}
+
+# module.s3_bucket.data.aws_canonical_user_id.this[0]:
+data "aws_canonical_user_id" "this" {
+    id = "1d2eee09418c88542478a9f6e9367a630ab9969a487d8df0d7fade98858412b2"
+}
+
+# module.s3_bucket.data.aws_partition.current:
+data "aws_partition" "current" {
+    dns_suffix         = "amazonaws.com"
+    id                 = "aws"
+    partition          = "aws"
+    reverse_dns_prefix = "com.amazonaws"
+}
+
+# module.s3_bucket.data.aws_region.current:
+data "aws_region" "current" {
+    description = "Asia Pacific (Seoul)"
+    endpoint    = "ec2.ap-northeast-2.amazonaws.com"
+    id          = "ap-northeast-2"
+    name        = "ap-northeast-2"
+}
+
+# module.s3_bucket.aws_s3_bucket.this[0]:
+resource "aws_s3_bucket" "this" {
+    arn                         = "arn:aws:s3:::aj-genai-bucket-preprocessing"
+    bucket                      = "aj-genai-bucket-preprocessing"
+    bucket_domain_name          = "aj-genai-bucket-preprocessing.s3.amazonaws.com"
+    bucket_regional_domain_name = "aj-genai-bucket-preprocessing.s3.ap-northeast-2.amazonaws.com"
+    force_destroy               = false
+    hosted_zone_id              = "Z3W03O7B5YMIYP"
+    id                          = "aj-genai-bucket-preprocessing"
+    object_lock_enabled         = false
+    policy                      = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "s3:*"
+                    Effect    = "Allow"
+                    Principal = {
+                        AWS = [
+                            "arn:aws:iam::526404279608:user/GenAI-PoC-01",
+                            "arn:aws:iam::526404279608:user/GenAI-PoC-02",
+                        ]
+                    }
+                    Resource  = [
+                        "arn:aws:s3:::aj-genai-bucket-preprocessing",
+                        "arn:aws:s3:::aj-genai-bucket-preprocessing/*",
+                    ]
+                    Sid       = "AllowUserAccess"
+                },
+                {
+                    Action    = "s3:*"
+                    Condition = {
+                        IpAddress = {
+                            "aws:SourceIp" = [
+                                "203.244.212.26/32",
+                                "121.137.21.115/32",
+                                "203.244.212.31/32",
+                                "203.244.212.30/32",
+                            ]
+                        }
+                    }
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = [
+                        "arn:aws:s3:::aj-genai-bucket-preprocessing",
+                        "arn:aws:s3:::aj-genai-bucket-preprocessing/*",
+                    ]
+                    Sid       = "IPAllow"
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    region                      = "ap-northeast-2"
+    request_payer               = "BucketOwner"
+    tags                        = {}
+    tags_all                    = {}
+
+    grant {
+        id          = "1d2eee09418c88542478a9f6e9367a630ab9969a487d8df0d7fade98858412b2"
+        permissions = [
+            "FULL_CONTROL",
+        ]
+        type        = "CanonicalUser"
+    }
+
+    server_side_encryption_configuration {
+        rule {
+            bucket_key_enabled = false
+
+            apply_server_side_encryption_by_default {
+                sse_algorithm = "AES256"
+            }
+        }
+    }
+
+    versioning {
+        enabled    = true
+        mfa_delete = false
+    }
+}
+
+# module.s3_bucket.aws_s3_bucket_acl.this[0]:
+resource "aws_s3_bucket_acl" "this" {
+    acl    = "private"
+    bucket = "aj-genai-bucket-preprocessing"
+    id     = "aj-genai-bucket-preprocessing,private"
+
+    access_control_policy {
+        grant {
+            permission = "FULL_CONTROL"
+
+            grantee {
+                id   = "1d2eee09418c88542478a9f6e9367a630ab9969a487d8df0d7fade98858412b2"
+                type = "CanonicalUser"
+            }
+        }
+        owner {
+            id = "1d2eee09418c88542478a9f6e9367a630ab9969a487d8df0d7fade98858412b2"
+        }
+    }
+}
+
+# module.s3_bucket.aws_s3_bucket_ownership_controls.this[0]:
+resource "aws_s3_bucket_ownership_controls" "this" {
+    bucket = "aj-genai-bucket-preprocessing"
+    id     = "aj-genai-bucket-preprocessing"
+
+    rule {
+        object_ownership = "ObjectWriter"
+    }
+}
+
+# module.s3_bucket.aws_s3_bucket_public_access_block.this[0]:
+resource "aws_s3_bucket_public_access_block" "this" {
+    block_public_acls       = true
+    block_public_policy     = true
+    bucket                  = "aj-genai-bucket-preprocessing"
+    id                      = "aj-genai-bucket-preprocessing"
+    ignore_public_acls      = true
+    restrict_public_buckets = true
+}
+
+# module.s3_bucket.aws_s3_bucket_versioning.this[0]:
+resource "aws_s3_bucket_versioning" "this" {
+    bucket = "aj-genai-bucket-preprocessing"
+    id     = "aj-genai-bucket-preprocessing"
+
+    versioning_configuration {
+        status = "Enabled"
+    }
+}
+
+
+# module.security_groups.module.security_group_alb.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-01fcdd83825147064"
+    description            = "Security group for alb"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-01fcdd83825147064"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "10.0.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    name                   = "aj-genai-sg-alb-20240801075032216200000005"
+    name_prefix            = "aj-genai-sg-alb-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-alb"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-alb"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_alb.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-957712666"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-01fcdd83825147064"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_alb.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 0
+    id                     = "sgrule-1572951218"
+    prefix_list_ids        = []
+    protocol               = "-1"
+    security_group_id      = "sg-01fcdd83825147064"
+    security_group_rule_id = "sgr-040e9b9f625da7112"
+    self                   = false
+    to_port                = 0
+    type                   = "ingress"
+}
+
+
+# module.security_groups.module.security_group_ec2_app_server.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-0b9e901dbd1b2f069"
+    description            = "Security group for ec2"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-0b9e901dbd1b2f069"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "10.0.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 3000
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 3000
+        },
+    ]
+    name                   = "aj-genai-sg-app-server-20240801075032575400000006"
+    name_prefix            = "aj-genai-sg-app-server-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-app-server"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-app-server"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_ec2_app_server.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-2108876096"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-0b9e901dbd1b2f069"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_ec2_app_server.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 3000
+    id                     = "sgrule-1888013732"
+    prefix_list_ids        = []
+    protocol               = "tcp"
+    security_group_id      = "sg-0b9e901dbd1b2f069"
+    security_group_rule_id = "sgr-076dda800cbccb4d9"
+    self                   = false
+    to_port                = 3000
+    type                   = "ingress"
+}
+
+
+# module.security_groups.module.security_group_ec2_eks_bastion.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-0903aacc60c296d73"
+    description            = "Security group for ec2"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-0903aacc60c296d73"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+    ]
+    name                   = "aj-genai-sg-eks-bastion-20240801075031693400000004"
+    name_prefix            = "aj-genai-sg-eks-bastion-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-eks-bastion"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-eks-bastion"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_ec2_eks_bastion.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-2021384882"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-0903aacc60c296d73"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_ec2_eks_bastion.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "0.0.0.0/0",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 80
+    id                     = "sgrule-327156743"
+    prefix_list_ids        = []
+    protocol               = "tcp"
+    security_group_id      = "sg-0903aacc60c296d73"
+    security_group_rule_id = "sgr-03db915de4519e210"
+    self                   = false
+    to_port                = 80
+    type                   = "ingress"
+}
+
+
+# module.security_groups.module.security_group_rds_aurora.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-011cc45b8a99715b3"
+    description            = "Security group for aurora postgresql"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-011cc45b8a99715b3"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "10.0.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    name                   = "aj-genai-sg-rds-aurora-postgresql-20240801075032679200000007"
+    name_prefix            = "aj-genai-sg-rds-aurora-postgresql-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-rds-aurora-postgresql"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-rds-aurora-postgresql"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_rds_aurora.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-375265402"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-011cc45b8a99715b3"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_rds_aurora.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 0
+    id                     = "sgrule-1634053165"
+    prefix_list_ids        = []
+    protocol               = "-1"
+    security_group_id      = "sg-011cc45b8a99715b3"
+    security_group_rule_id = "sgr-0273f80fa1e98903e"
+    self                   = false
+    to_port                = 0
+    type                   = "ingress"
+}
+
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-0d4d1c4bb01ca2634"
+    description            = "Security group for vpc endpoint"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-0d4d1c4bb01ca2634"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "10.0.0.0/16",
+                "10.1.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 53
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "udp"
+            security_groups  = []
+            self             = false
+            to_port          = 53
+        },
+        {
+            cidr_blocks      = [
+                "10.1.0.0/16",
+                "10.0.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 443
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 443
+        },
+    ]
+    name                   = "aj-genai-sg-endpoint-20240801075032742300000008"
+    name_prefix            = "aj-genai-sg-endpoint-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-endpoint"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-endpoint"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-319193737"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-0d4d1c4bb01ca2634"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 443
+    id                     = "sgrule-1812262400"
+    prefix_list_ids        = []
+    protocol               = "tcp"
+    security_group_id      = "sg-0d4d1c4bb01ca2634"
+    security_group_rule_id = "sgr-0d52442e848820935"
+    self                   = false
+    to_port                = 443
+    type                   = "ingress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group_rule.ingress_with_cidr_blocks[1]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.1.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 443
+    id                     = "sgrule-2071984573"
+    prefix_list_ids        = []
+    protocol               = "tcp"
+    security_group_id      = "sg-0d4d1c4bb01ca2634"
+    security_group_rule_id = "sgr-0d584f8f6f3729927"
+    self                   = false
+    to_port                = 443
+    type                   = "ingress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group_rule.ingress_with_cidr_blocks[2]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 53
+    id                     = "sgrule-1239464409"
+    prefix_list_ids        = []
+    protocol               = "udp"
+    security_group_id      = "sg-0d4d1c4bb01ca2634"
+    security_group_rule_id = "sgr-00dcedd58c81f3dba"
+    self                   = false
+    to_port                = 53
+    type                   = "ingress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_ap_northeast_2.aws_security_group_rule.ingress_with_cidr_blocks[3]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.1.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 53
+    id                     = "sgrule-1587260828"
+    prefix_list_ids        = []
+    protocol               = "udp"
+    security_group_id      = "sg-0d4d1c4bb01ca2634"
+    security_group_rule_id = "sgr-00fd00900384eb1d9"
+    self                   = false
+    to_port                = 53
+    type                   = "ingress"
+}
+
+
+# module.security_groups.module.security_group_vpc_endpoint_us_west_2.aws_security_group.this_name_prefix[0]:
+resource "aws_security_group" "this_name_prefix" {
+    arn                    = "arn:aws:ec2:us-west-2:526404279608:security-group/sg-0e0d4e6cc57301a1b"
+    description            = "Security group for vpc endpoint"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "All protocols"
+            from_port        = 0
+            ipv6_cidr_blocks = [
+                "::/0",
+            ]
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-0e0d4e6cc57301a1b"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "10.0.0.0/16",
+                "10.1.0.0/16",
+            ]
+            description      = "Ingress Rule"
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    name                   = "aj-genai-sg-endpoint-20240801075032512600000004"
+    name_prefix            = "aj-genai-sg-endpoint-"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-sg-endpoint"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-sg-endpoint"
+    }
+    vpc_id                 = "vpc-01da26cba1389fd64"
+
+    timeouts {
+        create = "10m"
+        delete = "15m"
+    }
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_us_west_2.aws_security_group_rule.egress_rules[0]:
+resource "aws_security_group_rule" "egress_rules" {
+    cidr_blocks       = [
+        "0.0.0.0/0",
+    ]
+    description       = "All protocols"
+    from_port         = 0
+    id                = "sgrule-1833810047"
+    ipv6_cidr_blocks  = [
+        "::/0",
+    ]
+    prefix_list_ids   = []
+    protocol          = "-1"
+    security_group_id = "sg-0e0d4e6cc57301a1b"
+    self              = false
+    to_port           = 0
+    type              = "egress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_us_west_2.aws_security_group_rule.ingress_with_cidr_blocks[0]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.0.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 0
+    id                     = "sgrule-396528030"
+    prefix_list_ids        = []
+    protocol               = "-1"
+    security_group_id      = "sg-0e0d4e6cc57301a1b"
+    security_group_rule_id = "sgr-0176ffc353bc96252"
+    self                   = false
+    to_port                = 0
+    type                   = "ingress"
+}
+
+# module.security_groups.module.security_group_vpc_endpoint_us_west_2.aws_security_group_rule.ingress_with_cidr_blocks[1]:
+resource "aws_security_group_rule" "ingress_with_cidr_blocks" {
+    cidr_blocks            = [
+        "10.1.0.0/16",
+    ]
+    description            = "Ingress Rule"
+    from_port              = 0
+    id                     = "sgrule-14261725"
+    prefix_list_ids        = []
+    protocol               = "-1"
+    security_group_id      = "sg-0e0d4e6cc57301a1b"
+    security_group_rule_id = "sgr-03a1aa43f24ea3aca"
+    self                   = false
+    to_port                = 0
+    type                   = "ingress"
+}
+
+
+# module.vpc_ap_northeast_2.aws_db_subnet_group.database[0]:
+resource "aws_db_subnet_group" "database" {
+    arn                     = "arn:aws:rds:ap-northeast-2:526404279608:subgrp:aj-genai-vpc-ap"
+    description             = "Database subnet group for aj-genai-vpc-ap"
+    id                      = "aj-genai-vpc-ap"
+    name                    = "aj-genai-vpc-ap"
+    subnet_ids              = [
+        "subnet-0871c2cb8269652bb",
+        "subnet-0ee222f2bbc139dc6",
+    ]
+    supported_network_types = [
+        "IPV4",
+    ]
+    tags                    = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+    tags_all                = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+    vpc_id                  = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_default_network_acl.this[0]:
+resource "aws_default_network_acl" "this" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:network-acl/acl-04c25cd432c7b0299"
+    default_network_acl_id = "acl-04c25cd432c7b0299"
+    id                     = "acl-04c25cd432c7b0299"
+    owner_id               = "526404279608"
+    subnet_ids             = [
+        "subnet-029befe183a1f0440",
+        "subnet-02d8e3b24567c21d6",
+        "subnet-05a3d42674948aed8",
+        "subnet-069a8e452244e57ca",
+        "subnet-0871c2cb8269652bb",
+        "subnet-0ee222f2bbc139dc6",
+    ]
+    tags                   = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    egress {
+        action          = "allow"
+        from_port       = 0
+        icmp_code       = 0
+        icmp_type       = 0
+        ipv6_cidr_block = "::/0"
+        protocol        = "-1"
+        rule_no         = 101
+        to_port         = 0
+    }
+    egress {
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        icmp_code  = 0
+        icmp_type  = 0
+        protocol   = "-1"
+        rule_no    = 100
+        to_port    = 0
+    }
+
+    ingress {
+        action          = "allow"
+        from_port       = 0
+        icmp_code       = 0
+        icmp_type       = 0
+        ipv6_cidr_block = "::/0"
+        protocol        = "-1"
+        rule_no         = 101
+        to_port         = 0
+    }
+    ingress {
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        icmp_code  = 0
+        icmp_type  = 0
+        protocol   = "-1"
+        rule_no    = 100
+        to_port    = 0
+    }
+}
+
+# module.vpc_ap_northeast_2.aws_default_route_table.default[0]:
+resource "aws_default_route_table" "default" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:route-table/rtb-0f80984b64df50f1e"
+    default_route_table_id = "rtb-0f80984b64df50f1e"
+    id                     = "rtb-0f80984b64df50f1e"
+    owner_id               = "526404279608"
+    propagating_vgws       = []
+    route                  = []
+    tags                   = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+
+    timeouts {
+        create = "5m"
+        update = "5m"
+    }
+}
+
+# module.vpc_ap_northeast_2.aws_default_security_group.this[0]:
+resource "aws_default_security_group" "this" {
+    arn                    = "arn:aws:ec2:ap-northeast-2:526404279608:security-group/sg-06a66909c69681a4f"
+    description            = "default VPC security group"
+    egress                 = []
+    id                     = "sg-06a66909c69681a4f"
+    ingress                = []
+    name                   = "default"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-ap-default"
+    }
+    vpc_id                 = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_eip.nat[0]:
+resource "aws_eip" "nat" {
+    allocation_id        = "eipalloc-0cfd748ccce65dab1"
+    arn                  = "arn:aws:ec2:ap-northeast-2:526404279608:elastic-ip/eipalloc-0cfd748ccce65dab1"
+    association_id       = "eipassoc-06de0c9221ce669b1"
+    domain               = "vpc"
+    id                   = "eipalloc-0cfd748ccce65dab1"
+    network_border_group = "ap-northeast-2"
+    network_interface    = "eni-080fe611bb1bc20e2"
+    private_dns          = "ip-10-0-1-13.ap-northeast-2.compute.internal"
+    private_ip           = "10.0.1.13"
+    public_dns           = "ec2-3-36-235-83.ap-northeast-2.compute.amazonaws.com"
+    public_ip            = "3.36.235.83"
+    public_ipv4_pool     = "amazon"
+    tags                 = {
+        "Name" = "aj-genai-vpc-ap-ap-northeast-2a"
+    }
+    tags_all             = {
+        "Name" = "aj-genai-vpc-ap-ap-northeast-2a"
+    }
+    vpc                  = true
+}
+
+# module.vpc_ap_northeast_2.aws_internet_gateway.this[0]:
+resource "aws_internet_gateway" "this" {
+    arn      = "arn:aws:ec2:ap-northeast-2:526404279608:internet-gateway/igw-0c63259cffdfc636f"
+    id       = "igw-0c63259cffdfc636f"
+    owner_id = "526404279608"
+    tags     = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+    tags_all = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+    vpc_id   = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_nat_gateway.this[0]:
+resource "aws_nat_gateway" "this" {
+    allocation_id                      = "eipalloc-0cfd748ccce65dab1"
+    association_id                     = "eipassoc-06de0c9221ce669b1"
+    connectivity_type                  = "public"
+    id                                 = "nat-035c1a5e4c80fa7e1"
+    network_interface_id               = "eni-080fe611bb1bc20e2"
+    private_ip                         = "10.0.1.13"
+    public_ip                          = "3.36.235.83"
+    secondary_allocation_ids           = []
+    secondary_private_ip_address_count = 0
+    secondary_private_ip_addresses     = []
+    subnet_id                          = "subnet-069a8e452244e57ca"
+    tags                               = {
+        "Name" = "aj-genai-vpc-ap-ap-northeast-2a"
+    }
+    tags_all                           = {
+        "Name" = "aj-genai-vpc-ap-ap-northeast-2a"
+    }
+}
+
+# module.vpc_ap_northeast_2.aws_route.private_nat_gateway[0]:
+resource "aws_route" "private_nat_gateway" {
+    destination_cidr_block = "0.0.0.0/0"
+    id                     = "r-rtb-00d5e52028b2cf5b11080289494"
+    nat_gateway_id         = "nat-035c1a5e4c80fa7e1"
+    origin                 = "CreateRoute"
+    route_table_id         = "rtb-00d5e52028b2cf5b1"
+    state                  = "active"
+
+    timeouts {
+        create = "5m"
+    }
+}
+
+# module.vpc_ap_northeast_2.aws_route.public_internet_gateway[0]:
+resource "aws_route" "public_internet_gateway" {
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id             = "igw-0c63259cffdfc636f"
+    id                     = "r-rtb-0ac2f9eef3f208c3a1080289494"
+    origin                 = "CreateRoute"
+    route_table_id         = "rtb-0ac2f9eef3f208c3a"
+    state                  = "active"
+
+    timeouts {
+        create = "5m"
+    }
+}
+
+# module.vpc_ap_northeast_2.aws_route_table.database[0]:
+resource "aws_route_table" "database" {
+    arn              = "arn:aws:ec2:ap-northeast-2:526404279608:route-table/rtb-08ec94189392ef40f"
+    id               = "rtb-08ec94189392ef40f"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = []
+    tags             = {
+        "Name" = "aj-genai-vpc-ap-db"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-ap-db"
+    }
+    vpc_id           = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table.private[0]:
+resource "aws_route_table" "private" {
+    arn              = "arn:aws:ec2:ap-northeast-2:526404279608:route-table/rtb-00d5e52028b2cf5b1"
+    id               = "rtb-00d5e52028b2cf5b1"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = "nat-035c1a5e4c80fa7e1"
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "10.1.0.0/16"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = "pcx-0dae807b624fae16d"
+        },
+    ]
+    tags             = {
+        "Name" = "aj-genai-vpc-ap-private"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-ap-private"
+    }
+    vpc_id           = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table.public[0]:
+resource "aws_route_table" "public" {
+    arn              = "arn:aws:ec2:ap-northeast-2:526404279608:route-table/rtb-0ac2f9eef3f208c3a"
+    id               = "rtb-0ac2f9eef3f208c3a"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = "igw-0c63259cffdfc636f"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    tags             = {
+        "Name" = "aj-genai-vpc-ap-public"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-ap-public"
+    }
+    vpc_id           = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.database[0]:
+resource "aws_route_table_association" "database" {
+    id             = "rtbassoc-0deffe6a6f6ae2244"
+    route_table_id = "rtb-08ec94189392ef40f"
+    subnet_id      = "subnet-0ee222f2bbc139dc6"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.database[1]:
+resource "aws_route_table_association" "database" {
+    id             = "rtbassoc-0a5666379ac42ecc8"
+    route_table_id = "rtb-08ec94189392ef40f"
+    subnet_id      = "subnet-0871c2cb8269652bb"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.private[0]:
+resource "aws_route_table_association" "private" {
+    id             = "rtbassoc-01975c734615c2f2e"
+    route_table_id = "rtb-00d5e52028b2cf5b1"
+    subnet_id      = "subnet-02d8e3b24567c21d6"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.private[1]:
+resource "aws_route_table_association" "private" {
+    id             = "rtbassoc-0f01d4f74c9a397f2"
+    route_table_id = "rtb-00d5e52028b2cf5b1"
+    subnet_id      = "subnet-029befe183a1f0440"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.public[0]:
+resource "aws_route_table_association" "public" {
+    id             = "rtbassoc-0d10b06fe29babe32"
+    route_table_id = "rtb-0ac2f9eef3f208c3a"
+    subnet_id      = "subnet-069a8e452244e57ca"
+}
+
+# module.vpc_ap_northeast_2.aws_route_table_association.public[1]:
+resource "aws_route_table_association" "public" {
+    id             = "rtbassoc-097f11ec89678425a"
+    route_table_id = "rtb-0ac2f9eef3f208c3a"
+    subnet_id      = "subnet-05a3d42674948aed8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.database[0]:
+resource "aws_subnet" "database" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-0ee222f2bbc139dc6"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2a"
+    availability_zone_id                           = "apne2-az1"
+    cidr_block                                     = "10.0.81.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0ee222f2bbc139dc6"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-database-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-database-01"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.database[1]:
+resource "aws_subnet" "database" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-0871c2cb8269652bb"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2c"
+    availability_zone_id                           = "apne2-az3"
+    cidr_block                                     = "10.0.82.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0871c2cb8269652bb"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-database-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-database-02"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.private[0]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-02d8e3b24567c21d6"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2a"
+    availability_zone_id                           = "apne2-az1"
+    cidr_block                                     = "10.0.41.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-02d8e3b24567c21d6"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-private-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-private-01"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.private[1]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-029befe183a1f0440"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2c"
+    availability_zone_id                           = "apne2-az3"
+    cidr_block                                     = "10.0.42.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-029befe183a1f0440"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-private-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-private-02"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.public[0]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-069a8e452244e57ca"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2a"
+    availability_zone_id                           = "apne2-az1"
+    cidr_block                                     = "10.0.1.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-069a8e452244e57ca"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-public-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-public-01"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_subnet.public[1]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:ap-northeast-2:526404279608:subnet/subnet-05a3d42674948aed8"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-2c"
+    availability_zone_id                           = "apne2-az3"
+    cidr_block                                     = "10.0.2.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-05a3d42674948aed8"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-public-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-public-02"
+    }
+    vpc_id                                         = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_ap_northeast_2.aws_vpc.this[0]:
+resource "aws_vpc" "this" {
+    arn                                  = "arn:aws:ec2:ap-northeast-2:526404279608:vpc/vpc-0a87de52b81f87ec8"
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = "10.0.0.0/16"
+    default_network_acl_id               = "acl-04c25cd432c7b0299"
+    default_route_table_id               = "rtb-0f80984b64df50f1e"
+    default_security_group_id            = "sg-06a66909c69681a4f"
+    dhcp_options_id                      = "dopt-011eef8b435a5f5e3"
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-0a87de52b81f87ec8"
+    instance_tenancy                     = "default"
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-0f80984b64df50f1e"
+    owner_id                             = "526404279608"
+    tags                                 = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+    tags_all                             = {
+        "Name" = "aj-genai-vpc-ap"
+    }
+}
+
+
+# module.vpc_endpoints_ap_northeast_2.aws_vpc_endpoint.this["s3"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:ap-northeast-2:526404279608:vpc-endpoint/vpce-09c2a32b39d19f5e3"
+    cidr_blocks           = [
+        "52.219.202.0/23",
+        "52.219.144.0/22",
+        "52.219.204.0/22",
+        "3.5.144.0/23",
+        "3.5.140.0/22",
+        "52.219.148.0/23",
+        "52.219.60.0/23",
+        "3.5.184.0/21",
+        "52.219.56.0/22",
+    ]
+    dns_entry             = []
+    id                    = "vpce-09c2a32b39d19f5e3"
+    network_interface_ids = []
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+            Version   = "2008-10-17"
+        }
+    )
+    prefix_list_id        = "pl-78a54011"
+    private_dns_enabled   = false
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = []
+    service_name          = "com.amazonaws.ap-northeast-2.s3"
+    state                 = "available"
+    subnet_ids            = []
+    tags                  = {
+        "Name"  = "aj-genai-vpc-endpoint-s3"
+        "Owner" = "sh1517.you"
+    }
+    tags_all              = {
+        "Name"  = "aj-genai-vpc-endpoint-s3"
+        "Owner" = "sh1517.you"
+    }
+    vpc_endpoint_type     = "Gateway"
+    vpc_id                = "vpc-0a87de52b81f87ec8"
+}
+
+# module.vpc_endpoints_ap_northeast_2.aws_vpc_endpoint.this["sts"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:ap-northeast-2:526404279608:vpc-endpoint/vpce-029368f0d8a9116ac"
+    cidr_blocks           = []
+    dns_entry             = [
+        {
+            dns_name       = "vpce-029368f0d8a9116ac-57uecfcw.sts.ap-northeast-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z27UANNT0PRK1T"
+        },
+        {
+            dns_name       = "vpce-029368f0d8a9116ac-57uecfcw-ap-northeast-2a.sts.ap-northeast-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z27UANNT0PRK1T"
+        },
+        {
+            dns_name       = "vpce-029368f0d8a9116ac-57uecfcw-ap-northeast-2c.sts.ap-northeast-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z27UANNT0PRK1T"
+        },
+        {
+            dns_name       = "sts.ap-northeast-2.amazonaws.com"
+            hosted_zone_id = "Z08244521W6A8JO3Q2K3Y"
+        },
+    ]
+    id                    = "vpce-029368f0d8a9116ac"
+    ip_address_type       = "ipv4"
+    network_interface_ids = [
+        "eni-061cc7b2871ff6175",
+        "eni-071b15f5187d5ab2b",
+    ]
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+        }
+    )
+    private_dns_enabled   = true
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = [
+        "sg-0d4d1c4bb01ca2634",
+    ]
+    service_name          = "com.amazonaws.ap-northeast-2.sts"
+    state                 = "available"
+    subnet_ids            = [
+        "subnet-029befe183a1f0440",
+        "subnet-02d8e3b24567c21d6",
+    ]
+    tags                  = {
+        "Name" = "aj-genai-vpc-endpoint-sts"
+    }
+    tags_all              = {
+        "Name" = "aj-genai-vpc-endpoint-sts"
+    }
+    vpc_endpoint_type     = "Interface"
+    vpc_id                = "vpc-0a87de52b81f87ec8"
+
+    dns_options {
+        dns_record_ip_type                             = "ipv4"
+        private_dns_only_for_inbound_resolver_endpoint = false
+    }
+
+    subnet_configuration {
+        ipv4      = "10.0.41.13"
+        subnet_id = "subnet-02d8e3b24567c21d6"
+    }
+    subnet_configuration {
+        ipv4      = "10.0.42.77"
+        subnet_id = "subnet-029befe183a1f0440"
+    }
+}
+
+
+# module.vpc_endpoints_us_west_2.aws_vpc_endpoint.this["bedrock"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:us-west-2:526404279608:vpc-endpoint/vpce-04cbdef730036d6e8"
+    cidr_blocks           = []
+    dns_entry             = [
+        {
+            dns_name       = "vpce-04cbdef730036d6e8-mc62nzgy.bedrock.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-04cbdef730036d6e8-mc62nzgy-us-west-2a.bedrock.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-04cbdef730036d6e8-mc62nzgy-us-west-2c.bedrock.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+    ]
+    id                    = "vpce-04cbdef730036d6e8"
+    ip_address_type       = "ipv4"
+    network_interface_ids = [
+        "eni-03225fd45f0993a91",
+        "eni-0c0a183dead1913aa",
+    ]
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+        }
+    )
+    private_dns_enabled   = false
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = [
+        "sg-0e0d4e6cc57301a1b",
+    ]
+    service_name          = "com.amazonaws.us-west-2.bedrock"
+    state                 = "available"
+    subnet_ids            = [
+        "subnet-06563017c4ef01cc6",
+        "subnet-07948c3c1e08bf32c",
+    ]
+    tags                  = {
+        "Name" = "aj-genai-vpc-endpoint-bedrock"
+    }
+    tags_all              = {
+        "Name" = "aj-genai-vpc-endpoint-bedrock"
+    }
+    vpc_endpoint_type     = "Interface"
+    vpc_id                = "vpc-01da26cba1389fd64"
+
+    dns_options {
+        dns_record_ip_type                             = "ipv4"
+        private_dns_only_for_inbound_resolver_endpoint = false
+    }
+
+    subnet_configuration {
+        ipv4      = "10.1.41.179"
+        subnet_id = "subnet-06563017c4ef01cc6"
+    }
+    subnet_configuration {
+        ipv4      = "10.1.42.74"
+        subnet_id = "subnet-07948c3c1e08bf32c"
+    }
+}
+
+# module.vpc_endpoints_us_west_2.aws_vpc_endpoint.this["bedrock-runtime"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:us-west-2:526404279608:vpc-endpoint/vpce-0063d744aa082a302"
+    cidr_blocks           = []
+    dns_entry             = [
+        {
+            dns_name       = "vpce-0063d744aa082a302-v503hry9.bedrock-runtime.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-0063d744aa082a302-v503hry9-us-west-2c.bedrock-runtime.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-0063d744aa082a302-v503hry9-us-west-2a.bedrock-runtime.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+    ]
+    id                    = "vpce-0063d744aa082a302"
+    ip_address_type       = "ipv4"
+    network_interface_ids = [
+        "eni-0a13f1448a84db12f",
+        "eni-0cf9222bee5677794",
+    ]
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+        }
+    )
+    private_dns_enabled   = false
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = [
+        "sg-0e0d4e6cc57301a1b",
+    ]
+    service_name          = "com.amazonaws.us-west-2.bedrock-runtime"
+    state                 = "available"
+    subnet_ids            = [
+        "subnet-06563017c4ef01cc6",
+        "subnet-07948c3c1e08bf32c",
+    ]
+    tags                  = {
+        "Name" = "aj-genai-vpc-endpoint-bedrock-runtime"
+    }
+    tags_all              = {
+        "Name" = "aj-genai-vpc-endpoint-bedrock-runtime"
+    }
+    vpc_endpoint_type     = "Interface"
+    vpc_id                = "vpc-01da26cba1389fd64"
+
+    dns_options {
+        dns_record_ip_type                             = "ipv4"
+        private_dns_only_for_inbound_resolver_endpoint = false
+    }
+
+    subnet_configuration {
+        ipv4      = "10.1.41.253"
+        subnet_id = "subnet-06563017c4ef01cc6"
+    }
+    subnet_configuration {
+        ipv4      = "10.1.42.200"
+        subnet_id = "subnet-07948c3c1e08bf32c"
+    }
+}
+
+# module.vpc_endpoints_us_west_2.aws_vpc_endpoint.this["s3"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:us-west-2:526404279608:vpc-endpoint/vpce-0e0d1f6fa213ff26a"
+    cidr_blocks           = [
+        "3.5.76.0/22",
+        "3.5.80.0/21",
+        "18.34.48.0/20",
+        "18.34.244.0/22",
+        "52.92.128.0/17",
+        "52.218.128.0/17",
+    ]
+    dns_entry             = []
+    id                    = "vpce-0e0d1f6fa213ff26a"
+    network_interface_ids = []
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+            Version   = "2008-10-17"
+        }
+    )
+    prefix_list_id        = "pl-68a54001"
+    private_dns_enabled   = false
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = []
+    service_name          = "com.amazonaws.us-west-2.s3"
+    state                 = "available"
+    subnet_ids            = []
+    tags                  = {
+        "Name" = "aj-genai-vpc-endpoint-s3"
+    }
+    tags_all              = {
+        "Name" = "aj-genai-vpc-endpoint-s3"
+    }
+    vpc_endpoint_type     = "Gateway"
+    vpc_id                = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_endpoints_us_west_2.aws_vpc_endpoint.this["sts"]:
+resource "aws_vpc_endpoint" "this" {
+    arn                   = "arn:aws:ec2:us-west-2:526404279608:vpc-endpoint/vpce-0f3732d4a3ba9a44d"
+    cidr_blocks           = []
+    dns_entry             = [
+        {
+            dns_name       = "vpce-0f3732d4a3ba9a44d-auzv553j.sts.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-0f3732d4a3ba9a44d-auzv553j-us-west-2a.sts.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "vpce-0f3732d4a3ba9a44d-auzv553j-us-west-2c.sts.us-west-2.vpce.amazonaws.com"
+            hosted_zone_id = "Z1YSA3EXCYUU9Z"
+        },
+        {
+            dns_name       = "sts.us-west-2.amazonaws.com"
+            hosted_zone_id = "Z01477552CRG7LAL9H9MH"
+        },
+    ]
+    id                    = "vpce-0f3732d4a3ba9a44d"
+    ip_address_type       = "ipv4"
+    network_interface_ids = [
+        "eni-022ec92b3af88d4e0",
+        "eni-0690c9a0ddfac29af",
+    ]
+    owner_id              = "526404279608"
+    policy                = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "*"
+                    Effect    = "Allow"
+                    Principal = "*"
+                    Resource  = "*"
+                },
+            ]
+        }
+    )
+    private_dns_enabled   = true
+    requester_managed     = false
+    route_table_ids       = []
+    security_group_ids    = [
+        "sg-0e0d4e6cc57301a1b",
+    ]
+    service_name          = "com.amazonaws.us-west-2.sts"
+    state                 = "available"
+    subnet_ids            = [
+        "subnet-06563017c4ef01cc6",
+        "subnet-07948c3c1e08bf32c",
+    ]
+    tags                  = {
+        "Name" = "aj-genai-vpc-endpoint-sts"
+    }
+    tags_all              = {
+        "Name" = "aj-genai-vpc-endpoint-sts"
+    }
+    vpc_endpoint_type     = "Interface"
+    vpc_id                = "vpc-01da26cba1389fd64"
+
+    dns_options {
+        dns_record_ip_type                             = "ipv4"
+        private_dns_only_for_inbound_resolver_endpoint = false
+    }
+
+    subnet_configuration {
+        ipv4      = "10.1.41.38"
+        subnet_id = "subnet-06563017c4ef01cc6"
+    }
+    subnet_configuration {
+        ipv4      = "10.1.42.84"
+        subnet_id = "subnet-07948c3c1e08bf32c"
+    }
+}
+
+
+# module.vpc_peering.aws_route.ap_to_us[0]:
+resource "aws_route" "ap_to_us" {
+    destination_cidr_block    = "10.1.0.0/16"
+    id                        = "r-rtb-00d5e52028b2cf5b1972025212"
+    origin                    = "CreateRoute"
+    route_table_id            = "rtb-00d5e52028b2cf5b1"
+    state                     = "active"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+}
+
+# module.vpc_peering.aws_route.us_to_ap[0]:
+resource "aws_route" "us_to_ap" {
+    destination_cidr_block    = "10.0.0.0/16"
+    id                        = "r-rtb-03c8949b2090be362179966490"
+    origin                    = "CreateRoute"
+    route_table_id            = "rtb-03c8949b2090be362"
+    state                     = "active"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+}
+
+# module.vpc_peering.aws_route.us_to_ap[1]:
+resource "aws_route" "us_to_ap" {
+    destination_cidr_block    = "10.0.0.0/16"
+    id                        = "r-rtb-08ace1c8c4296ced8179966490"
+    origin                    = "CreateRoute"
+    route_table_id            = "rtb-08ace1c8c4296ced8"
+    state                     = "active"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+}
+
+# module.vpc_peering.aws_vpc_peering_connection.peering_ap_us:
+resource "aws_vpc_peering_connection" "peering_ap_us" {
+    accept_status = "active"
+    auto_accept   = false
+    id            = "pcx-0dae807b624fae16d"
+    peer_owner_id = "526404279608"
+    peer_region   = "us-west-2"
+    peer_vpc_id   = "vpc-01da26cba1389fd64"
+    tags          = {
+        "Name" = "aj-genai-peering-ap-us"
+    }
+    tags_all      = {
+        "Name" = "aj-genai-peering-ap-us"
+    }
+    vpc_id        = "vpc-0a87de52b81f87ec8"
+
+    accepter {
+        allow_remote_vpc_dns_resolution = true
+    }
+
+    requester {
+        allow_remote_vpc_dns_resolution = true
+    }
+}
+
+# module.vpc_peering.aws_vpc_peering_connection_accepter.peering_accepter_us:
+resource "aws_vpc_peering_connection_accepter" "peering_accepter_us" {
+    accept_status             = "active"
+    auto_accept               = true
+    id                        = "pcx-0dae807b624fae16d"
+    peer_owner_id             = "526404279608"
+    peer_region               = "us-west-2"
+    peer_vpc_id               = "vpc-01da26cba1389fd64"
+    tags                      = {}
+    tags_all                  = {}
+    vpc_id                    = "vpc-0a87de52b81f87ec8"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+
+    accepter {
+        allow_remote_vpc_dns_resolution = true
+    }
+
+    requester {
+        allow_remote_vpc_dns_resolution = true
+    }
+}
+
+# module.vpc_peering.aws_vpc_peering_connection_options.peering_options_ap:
+resource "aws_vpc_peering_connection_options" "peering_options_ap" {
+    id                        = "pcx-0dae807b624fae16d"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+
+    accepter {
+        allow_remote_vpc_dns_resolution = true
+    }
+
+    requester {
+        allow_remote_vpc_dns_resolution = true
+    }
+}
+
+# module.vpc_peering.aws_vpc_peering_connection_options.peering_options_us:
+resource "aws_vpc_peering_connection_options" "peering_options_us" {
+    id                        = "pcx-0dae807b624fae16d"
+    vpc_peering_connection_id = "pcx-0dae807b624fae16d"
+
+    accepter {
+        allow_remote_vpc_dns_resolution = true
+    }
+
+    requester {
+        allow_remote_vpc_dns_resolution = true
+    }
+}
+
+
+# module.vpc_us_west_2.aws_default_network_acl.this[0]:
+resource "aws_default_network_acl" "this" {
+    arn                    = "arn:aws:ec2:us-west-2:526404279608:network-acl/acl-0db1fdba835648fb7"
+    default_network_acl_id = "acl-0db1fdba835648fb7"
+    id                     = "acl-0db1fdba835648fb7"
+    owner_id               = "526404279608"
+    subnet_ids             = [
+        "subnet-024abeff9827fef63",
+        "subnet-06563017c4ef01cc6",
+        "subnet-0722e65d6d9face25",
+        "subnet-07948c3c1e08bf32c",
+        "subnet-0805c65a686a4031f",
+        "subnet-08b58d6d9707f7f06",
+    ]
+    tags                   = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    vpc_id                 = "vpc-01da26cba1389fd64"
+
+    egress {
+        action          = "allow"
+        from_port       = 0
+        icmp_code       = 0
+        icmp_type       = 0
+        ipv6_cidr_block = "::/0"
+        protocol        = "-1"
+        rule_no         = 101
+        to_port         = 0
+    }
+    egress {
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        icmp_code  = 0
+        icmp_type  = 0
+        protocol   = "-1"
+        rule_no    = 100
+        to_port    = 0
+    }
+
+    ingress {
+        action          = "allow"
+        from_port       = 0
+        icmp_code       = 0
+        icmp_type       = 0
+        ipv6_cidr_block = "::/0"
+        protocol        = "-1"
+        rule_no         = 101
+        to_port         = 0
+    }
+    ingress {
+        action     = "allow"
+        cidr_block = "0.0.0.0/0"
+        from_port  = 0
+        icmp_code  = 0
+        icmp_type  = 0
+        protocol   = "-1"
+        rule_no    = 100
+        to_port    = 0
+    }
+}
+
+# module.vpc_us_west_2.aws_default_route_table.default[0]:
+resource "aws_default_route_table" "default" {
+    arn                    = "arn:aws:ec2:us-west-2:526404279608:route-table/rtb-0e02813c6f852510f"
+    default_route_table_id = "rtb-0e02813c6f852510f"
+    id                     = "rtb-0e02813c6f852510f"
+    owner_id               = "526404279608"
+    propagating_vgws       = []
+    route                  = []
+    tags                   = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    vpc_id                 = "vpc-01da26cba1389fd64"
+
+    timeouts {
+        create = "5m"
+        update = "5m"
+    }
+}
+
+# module.vpc_us_west_2.aws_default_security_group.this[0]:
+resource "aws_default_security_group" "this" {
+    arn                    = "arn:aws:ec2:us-west-2:526404279608:security-group/sg-099b378c7c1097741"
+    description            = "default VPC security group"
+    egress                 = []
+    id                     = "sg-099b378c7c1097741"
+    ingress                = []
+    name                   = "default"
+    owner_id               = "526404279608"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    tags_all               = {
+        "Name" = "aj-genai-vpc-us-default"
+    }
+    vpc_id                 = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_internet_gateway.this[0]:
+resource "aws_internet_gateway" "this" {
+    arn      = "arn:aws:ec2:us-west-2:526404279608:internet-gateway/igw-089532de91534f2b2"
+    id       = "igw-089532de91534f2b2"
+    owner_id = "526404279608"
+    tags     = {
+        "Name" = "aj-genai-vpc-us"
+    }
+    tags_all = {
+        "Name" = "aj-genai-vpc-us"
+    }
+    vpc_id   = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_route.public_internet_gateway[0]:
+resource "aws_route" "public_internet_gateway" {
+    destination_cidr_block = "0.0.0.0/0"
+    gateway_id             = "igw-089532de91534f2b2"
+    id                     = "r-rtb-041ef729d69af1e821080289494"
+    origin                 = "CreateRoute"
+    route_table_id         = "rtb-041ef729d69af1e82"
+    state                  = "active"
+
+    timeouts {
+        create = "5m"
+    }
+}
+
+# module.vpc_us_west_2.aws_route_table.private[0]:
+resource "aws_route_table" "private" {
+    arn              = "arn:aws:ec2:us-west-2:526404279608:route-table/rtb-03c8949b2090be362"
+    id               = "rtb-03c8949b2090be362"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "10.0.0.0/16"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = "pcx-0dae807b624fae16d"
+        },
+    ]
+    tags             = {
+        "Name" = "aj-genai-vpc-us-private-us-west-2a"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-us-private-us-west-2a"
+    }
+    vpc_id           = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_route_table.private[1]:
+resource "aws_route_table" "private" {
+    arn              = "arn:aws:ec2:us-west-2:526404279608:route-table/rtb-08ace1c8c4296ced8"
+    id               = "rtb-08ace1c8c4296ced8"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "10.0.0.0/16"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = ""
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = "pcx-0dae807b624fae16d"
+        },
+    ]
+    tags             = {
+        "Name" = "aj-genai-vpc-us-private-us-west-2c"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-us-private-us-west-2c"
+    }
+    vpc_id           = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_route_table.public[0]:
+resource "aws_route_table" "public" {
+    arn              = "arn:aws:ec2:us-west-2:526404279608:route-table/rtb-041ef729d69af1e82"
+    id               = "rtb-041ef729d69af1e82"
+    owner_id         = "526404279608"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = "igw-089532de91534f2b2"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    tags             = {
+        "Name" = "aj-genai-vpc-us-public"
+    }
+    tags_all         = {
+        "Name" = "aj-genai-vpc-us-public"
+    }
+    vpc_id           = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.database[0]:
+resource "aws_route_table_association" "database" {
+    id             = "rtbassoc-0465c1eaa1d059301"
+    route_table_id = "rtb-03c8949b2090be362"
+    subnet_id      = "subnet-0805c65a686a4031f"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.database[1]:
+resource "aws_route_table_association" "database" {
+    id             = "rtbassoc-0ff2a441e2169ca95"
+    route_table_id = "rtb-08ace1c8c4296ced8"
+    subnet_id      = "subnet-0722e65d6d9face25"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.private[0]:
+resource "aws_route_table_association" "private" {
+    id             = "rtbassoc-001df7e6e450d9667"
+    route_table_id = "rtb-03c8949b2090be362"
+    subnet_id      = "subnet-06563017c4ef01cc6"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.private[1]:
+resource "aws_route_table_association" "private" {
+    id             = "rtbassoc-0ee26340360ab32c1"
+    route_table_id = "rtb-08ace1c8c4296ced8"
+    subnet_id      = "subnet-07948c3c1e08bf32c"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.public[0]:
+resource "aws_route_table_association" "public" {
+    id             = "rtbassoc-0dc65e7d6bf8a76ca"
+    route_table_id = "rtb-041ef729d69af1e82"
+    subnet_id      = "subnet-08b58d6d9707f7f06"
+}
+
+# module.vpc_us_west_2.aws_route_table_association.public[1]:
+resource "aws_route_table_association" "public" {
+    id             = "rtbassoc-0bfad16c1e11751cb"
+    route_table_id = "rtb-041ef729d69af1e82"
+    subnet_id      = "subnet-024abeff9827fef63"
+}
+
+# module.vpc_us_west_2.aws_subnet.database[0]:
+resource "aws_subnet" "database" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-0805c65a686a4031f"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2a"
+    availability_zone_id                           = "usw2-az1"
+    cidr_block                                     = "10.1.81.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0805c65a686a4031f"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-database-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-database-01"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_subnet.database[1]:
+resource "aws_subnet" "database" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-0722e65d6d9face25"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2c"
+    availability_zone_id                           = "usw2-az3"
+    cidr_block                                     = "10.1.82.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0722e65d6d9face25"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-database-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-database-02"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_subnet.private[0]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-06563017c4ef01cc6"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2a"
+    availability_zone_id                           = "usw2-az1"
+    cidr_block                                     = "10.1.41.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-06563017c4ef01cc6"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-private-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-private-01"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_subnet.private[1]:
+resource "aws_subnet" "private" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-07948c3c1e08bf32c"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2c"
+    availability_zone_id                           = "usw2-az3"
+    cidr_block                                     = "10.1.42.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-07948c3c1e08bf32c"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-private-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-private-02"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_subnet.public[0]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-08b58d6d9707f7f06"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2a"
+    availability_zone_id                           = "usw2-az1"
+    cidr_block                                     = "10.1.1.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-08b58d6d9707f7f06"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-public-01"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-public-01"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_subnet.public[1]:
+resource "aws_subnet" "public" {
+    arn                                            = "arn:aws:ec2:us-west-2:526404279608:subnet/subnet-024abeff9827fef63"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-west-2c"
+    availability_zone_id                           = "usw2-az3"
+    cidr_block                                     = "10.1.2.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-024abeff9827fef63"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "526404279608"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "aj-genai-subnet-public-02"
+    }
+    tags_all                                       = {
+        "Name" = "aj-genai-subnet-public-02"
+    }
+    vpc_id                                         = "vpc-01da26cba1389fd64"
+}
+
+# module.vpc_us_west_2.aws_vpc.this[0]:
+resource "aws_vpc" "this" {
+    arn                                  = "arn:aws:ec2:us-west-2:526404279608:vpc/vpc-01da26cba1389fd64"
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = "10.1.0.0/16"
+    default_network_acl_id               = "acl-0db1fdba835648fb7"
+    default_route_table_id               = "rtb-0e02813c6f852510f"
+    default_security_group_id            = "sg-099b378c7c1097741"
+    dhcp_options_id                      = "dopt-02caf1a8892bb3025"
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-01da26cba1389fd64"
+    instance_tenancy                     = "default"
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-0e02813c6f852510f"
+    owner_id                             = "526404279608"
+    tags                                 = {
+        "Name" = "aj-genai-vpc-us"
+    }
+    tags_all                             = {
+        "Name" = "aj-genai-vpc-us"
+    }
+}
+
+
+Outputs:
+
+route53_information_keys = [
+    "bedrock",
+    "bedrock-runtime",
+]
+vpc_endpoints_information_keys = [
+    "bedrock",
+    "bedrock-runtime",
+    "s3",
+    "sts",
+]

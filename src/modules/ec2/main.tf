@@ -10,7 +10,15 @@ module "ec2_instance" {
   instance_type          = each.value.instance_type
   vpc_security_group_ids = each.value.vpc_security_group_ids
 
+  user_data = each.value.user_data
+  root_block_device = [
+    {
+      volume_size = each.value.volume_size
+    }
+  ]
+
   iam_instance_profile = var.iam_instance_profile
+
 
   tags = {
     Name = each.value.tag_name

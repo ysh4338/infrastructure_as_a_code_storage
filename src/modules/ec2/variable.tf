@@ -7,6 +7,8 @@ variable "ec2_config" {
     subnet_id              = string
     vpc_security_group_ids = list(string)
     tag_name               = string
+    volume_size            = number
+    user_data              = string
   }))
 }
 
