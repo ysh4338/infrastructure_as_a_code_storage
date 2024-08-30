@@ -219,7 +219,7 @@ module "alb_ap_northeast_2" {
   security_groups = local.application_lb_config.ap-northeast-2.security_groups
   listeners       = local.application_lb_config.ap-northeast-2.listeners
   target_groups   = local.application_lb_config.ap-northeast-2.target_groups
-  # health_check = local.application_lb_config.ap-northeast-2.health_check
+  health_check = local.application_lb_config.ap-northeast-2.health_check
 }
 
 module "route_53" {
