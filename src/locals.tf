@@ -243,26 +243,25 @@ locals {
             target_group_key = "${local.convention}-tg-llm-app"
           }
 
-          listener_rules = {
-          default = {
-            priority = 9999
-            actions = {
-              type               = "forward"
-              target_group_key   = "${local.convention}-tg-llm-frontend"
+          rules = {
+            default = {
+              priority = 9999
+              actions = {
+                type               = "forward"
+                target_group_key   = "${local.convention}-tg-llm-frontend"
+              }
+            }
+            backend = {
+              priority = 2
+              actions = {
+                type               = "forward"
+                target_group_key   = "${local.convention}-tg-llm-backend"
+              }
+              conditions = {
+                path_patterns = ["/bedrock/*", /maintenances*, /auth*]
+              }
             }
           }
-          backend = {
-            priority = 2
-            actions = {
-              type               = "forward"
-              target_group_key   = "${local.convention}-tg-llm-backend"
-            }
-            conditions = {
-              path_patterns = ["/bedrock/*", /maintenances*, /auth*]
-            }
-          }
-        }
-
         }
       }
       
