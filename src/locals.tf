@@ -242,16 +242,43 @@ locals {
           forward = {
             target_group_key = "${local.convention}-tg-llm-app"
           }
+
+          listener_rules = {
+          default = {
+            priority = 9999
+            actions = {
+              type               = "forward"
+              target_group_key   = "${local.convention}-tg-llm-frontend"
+            }
+          }
+          backend = {
+            priority = 2
+            actions = {
+              type               = "forward"
+              target_group_key   = "${local.convention}-tg-llm-backend"
+            }
+            conditions = {
+              path_patterns = ["/bedrock/*", /maintenances*, /auth*]
+            }
+          }
+        }
+
         }
       }
+      
       target_groups = {
-        "${local.convention}-tg-llm-app" = {
+        "${local.convention}-tg-llm-frontend" = {
           protocol    = "HTTP"
           port        = 3000
           target_type = "instance"
           target_id   = module.ec2_ap_northeast_2.ec2_instance_id["ec2-app-server"].instance_id
-        }
-      }
+        },
+        "${local.convention}-tg-llm-backend" = {
+          protocol    = "HTTP"
+          port        = 8001
+          target_type = "instance"
+          target_id   = module.ec2_ap_northeast_2.ec2_instance_id["ec2-app-server"].instance_id
+        }}
 
       health_check = {
         target              = "HTTP:3000/"
